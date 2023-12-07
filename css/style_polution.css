@@ -1,5 +1,6 @@
 body{
     background-color: rgb(84, 122, 192);
+
 }::-webkit-scrollbar-track {
     background: black;
 }::-webkit-scrollbar-thumb {
@@ -21,5 +22,28 @@ section{
 #factory_bg{
     position: absolute;
     z-index: 10;
-    max-height: 80px;
+    height: 80px;
+    transform: translate(0, 15%);
+    z-index: 0;
+}footer{
+    background-color: black;
+}footer p{
+    color: white;
+}#factory_wrapper{
+    width: 100%;
+    height: 90px;
+    background-image: url("../img/factory_bg.png");
+    background-repeat: repeat-x;
+    background-position: bottom;
+    background-size: 250px;
+    transform: translate(0, +17px);
+}
+
+#smoke_screen{
+    width: 100%;
+}
+.smoke{
+    position: absolute;
+    height: 100px;
+    transform: translate(0px, 0px);
 }

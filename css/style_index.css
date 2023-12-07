@@ -106,6 +106,12 @@ section{
     color: lightseagreen;
 }
 
+footer{
+    background-color: rgb(176, 176, 176);
+}footer p{
+    color: black;
+}
+
 /* Mobile */
 @media screen and (max-width: 600px) {
     header{
