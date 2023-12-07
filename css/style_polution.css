@@ -1,0 +1,26 @@
+body{
+    background-color: rgb(84, 122, 192);
+}::-webkit-scrollbar-track {
+    background: black;
+}::-webkit-scrollbar-thumb {
+    background: #333;
+}::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Section */
+section{
+    color: white;
+}section hr{
+    background-color: black;
+    border-color: black;
+}section a{
+    color: black;
+}
+
+#factory_bg{
+    position: absolute;
+    z-index: 10;
+    max-height: 80px;
+    bottom: 0;
+}

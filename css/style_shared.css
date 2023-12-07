@@ -1,0 +1,65 @@
+/* Basic */
+body{
+    padding: 0;
+    margin: 0;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+}::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Footer */
+footer{
+    margin-left: 10%;
+    position: relative;
+    width: 80%;
+    height: 15px;
+    background-color: rgb(200, 200, 200);
+    border-radius: 15px 15px 0 0;
+    z-index: 5;
+}footer p{
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+    margin: 0;
+    color: black;
+    font-size: 12px;
+    bottom: 0;
+    height: 100%;
+    align-items: end;
+    line-height: 1.5em;
+}#footer_left{
+    padding-left: 40px;
+    float: left;
+}#footer_right{
+    padding-right: 40px;
+    float: right;
+}
+
+/* Section */
+section{
+    position: relative;
+    background-color: transparent;
+    width: 100%;
+    color: red;
+}section h2{
+    text-align: center;
+    font-size: clamp(25px, 4vw, 50px);
+}section p{
+    font-size: 15px;
+    text-align:justify;
+    line-height: 1.5em;
+    margin-bottom: 40px;
+}.section_item{
+    padding: 0 10% 10px 10%;
+}section hr{
+    width: 80%;
+    height: 8px;
+    background-color: red;
+    border-radius: 5px;
+    border-color: red;
+}section a{
+    color: red;
+    text-decoration: none;
+}

@@ -1,0 +1,18 @@
+body{
+    background-color: black;
+}::-webkit-scrollbar-track {
+    background: #222;
+}::-webkit-scrollbar-thumb {
+    background: #fff;
+}::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+
+section{
+    color: white;
+}section hr{
+    background-color: white;
+}section a{
+    color: lightseagreen;
+}
