@@ -1,0 +1,66 @@
+*{
+    margin: 0;
+    padding: 0;
+}body{
+    /* background-color: black; */
+    background: rgb(253,187,45);
+background: linear-gradient(180deg, rgba(253,187,45,1) 0%, rgba(34,193,195,1) 50%, rgba(34,127,195,1) 100%);
+}::-webkit-scrollbar-track {
+    background: #fff;
+}::-webkit-scrollbar-thumb {
+    background: #bbb;   
+}::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+/* header */
+#main_page{
+    background-color: transparent;
+    border: white solid 3px;
+}#main_page:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+}#main_page p{
+    color: white;
+}
+#header_container{
+    border: white solid 3px;
+    background-color: transparent;
+}#header_container p{
+    color: white;
+}#header_container p:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Section */
+section{
+    color: white;
+}section hr{
+    background-color: white;
+    border-color: white;
+}section a{
+    color: red;
+}.section_background{
+    border: white solid 3px;
+    color: white;
+    background-color: transparent;
+}
+
+/* footer */
+footer{
+    background-color: white;
+}footer p{
+    color: black;
+}
+
+
+
+/* other */
+@media screen and (max-width: 800px) {
+    #header_container{
+        border: 0;
+        background-color: transparent;
+    }#header_container p{
+        background-color: transparent;
+        border: white solid 3px;
+    }
+}

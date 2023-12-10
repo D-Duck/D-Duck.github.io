@@ -1,50 +1,119 @@
-var smoke_spawn = document.getElementById("smoke_screen");
-var smoke_pos = [[0, 0]];
-var to_delete = [];
+var target_particle_size = 200;
 
+var particle_container = document.getElementById("smoke_screen");
+var target_height = document.documentElement.scrollHeight + target_particle_size;
+var last_viewport_update = document.documentElement.scrollWidth;
+var frozen = false;
+// stores this values [x, y, particle_size]
+var smoke_data = [];
+
+// creates single smoke particle, memory in {smoke_data}, set's it's properties
+function createSmoke(){
+    // set image properties
+    let particle = document.createElement("img");
+    particle.src = "./img/Polution/smoke.png";
+    particle.className = "smoke";
+    particle.style.left = String(Math.floor(Math.random() * 70) + 5) + "%";
+    particle.width = 0;
+    particle.height = 0;
+    particle.style.opacity = "0.2";
+
+    smoke_data.push(generateParticleData());
+    particle_container.appendChild(particle);
+}
+
+// updates {smoke_data} for each {particle_container} child 
 function update_smoke(){
-    let index = 0;
-    for (const child of smoke_spawn.children) {  
-        smoke_pos[index][1] -= 2;
+    // cheks if {frozen} is false
+    if (!frozen){
+        // update {target_height} ; {target_height} = height of page + {target_particle_size}
+        target_height = document.documentElement.scrollHeight + target_particle_size;
         
-        if (smoke_pos[index][1] > -100){
+        let index = 0; // index of currently updated particle
+        for (const child of particle_container.children) {  
+            // move particle up by 2px
+            smoke_data[index][1] -= 2;
+            
+            // cheks if particle is still visible on screen
+            if (smoke_data[index][1] > -target_height){
+                // update {smoke_data}[particle_size] by ; {target_particle_size} / number_of_steps
+                smoke_data[index][2] += target_particle_size / (target_height / 2);
 
-            let temp = Math.random();
+                // change particle size by {smoke_data}[particle_size]
+                child.width = smoke_data[index][2];
+                child.height = smoke_data[index][2];
 
-            if (temp < 0.2){
-                smoke_pos[index][0] += 1;
-            }else if (temp > 0.8){
-                smoke_pos[index][0] -= 1;
+                // randomply move particle on x axis
+                let dir = Math.random();
+                if (dir > 0.8){
+                    smoke_data[index][0] -= 1;
+                }else if (dir < 0.2){
+                    smoke_data[index][0] += 1;
+                }
+                
+                // actually update particle from {smoke_data}
+                child.style.transform = `translate(${String(smoke_data[index][0])}px,${String(smoke_data[index][1])}px)`;
+            // if parthicle is no longer visible ...
+            }else{
+                // randomise x position 
+                child.style.left = String(Math.floor(Math.random() * 70) + 5) + "%";
+                // sets {smoke_data} to default values
+                smoke_data[index] = [0, +30, 0];
             }
+            index++;
+        }
+    }
+}
 
-            child.style.transform = "translate(" + String(smoke_pos[index][0]) + "px," + String(smoke_pos[index][1]) + "px)";
+// on viewport resize
+function viewportUpdate(force=false){
+    let threshold = 50;
 
+    // cheks if viewport changed more then {threshold}
+    if (Math.abs(last_viewport_update - document.documentElement.scrollWidth) > threshold || force == true){
+        // updates {last_viewport_update}
+        last_viewport_update = document.documentElement.scrollWidth;
+
+        // check if visible width is less then 800px
+        if (last_viewport_update < 800){
+            frozen = true;
+
+            // sets particle invisible
+            for (const child of particle_container.children) {
+                child.style.opacity = "0";
+            }
+        // if visible width is more then 800px
         }else{
-            to_delete.push(index);
-            child.remove();
+            frozen = false;
+
+            // sets particle visible
+            for (const child of particle_container.children) {
+                child.style.opacity = "0.2";
+            }
         }
 
-        index++;
-    }
-    if (to_delete.length > 0){
-        for (index in to_delete){
-            smoke_pos.pop(index);
+        for (var index=0; index!=(smoke_data.length-1); index++) {
+            smoke_data[index] = generateParticleData()
         }
     }
 }
 
-function create_smoke(){
-    let img = document.createElement("img");
-    img.src = "./img/smoke.png";
-    img.className = "smoke";
-    img.style.left = String(Math.floor(Math.random() * smoke_spawn.offsetWidth)) + "px";
+function generateParticleData(){
+    // generate random vertical position from [0 - ceiling]
+    let y = Math.floor(Math.random() * target_height);
+    // calculates {particle_size} based on vertical position
+    let particle_size = y / document.documentElement.scrollHeight * target_particle_size;
 
-    smoke_pos.push([0, 0]);
-    smoke_spawn.appendChild(img);
+    return [0, -y, particle_size]
 }
 
-for (var i=0; i<10; i++){
-    create_smoke();
+// spawn {count} number of smoke particles
+for (var count=0; count<400; count++){
+    createSmoke();
 }
 
-window.setInterval(update_smoke, 40);
+viewportUpdate(true)
+// set interval for update_smoke()
+window.setInterval(update_smoke, 30);
+// set event listener
+visualViewport.addEventListener("resize", viewportUpdate);
