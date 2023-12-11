@@ -16,7 +16,7 @@ section a{
     color: red;
 }
 
-/* other */
+/* Phone */
 @media screen and (max-width: 800px) {
     #header_container{
         border: 0;

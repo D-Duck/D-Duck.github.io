@@ -11,11 +11,17 @@
     background: #888;
 }
 
+/* Section */
 section a{
     color: red;
 }
 
-/* other */
+/* Fire */
+/* .fire{
+    width: 25%;
+} */
+
+/* Phone */
 @media screen and (max-width: 800px) {
     #header_container{
         border: 0;

@@ -4,11 +4,11 @@
 }body{
     background-image: linear-gradient(rgb(47, 47, 47), rgb(86, 134, 193));
 }::-webkit-scrollbar-track {
-    background: black;
+    background: #fff;
 }::-webkit-scrollbar-thumb {
-    background: #333;   
+    background: #bbb;   
 }::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #888;
 }
 
 /* Section */
@@ -16,16 +16,22 @@ section a{
     color: red;
 }
 
-/* footer */
-footer{
-    background-color: black;
-}footer p{
-    color: white;
+/* Smoke */
+#smoke_screen{
+    width: 100%;
+}.smoke{
+    pointer-events: none;
+    overflow: hidden;
+    position: absolute;
+    transform: translate(0px, 0px);
 }
+
+/* Factory */
 #factory_bg{
     position: absolute;
     z-index: 10;
     height: 200px;
+    width: 100%;
     transform: translate(0, 15%);
     z-index: 0;
 }#factory_wrapper{
@@ -39,17 +45,14 @@ footer{
     background-size: 300px;
 }
 
-/* smoke effect */
-#smoke_screen{
-    width: 100%;
-}.smoke{
-    pointer-events: none;
-    overflow: hidden;
-    position: absolute;
-    transform: translate(0px, 0px);
+/* Footer */
+footer{
+    background-color: black;
+}footer p{
+    color: white;
 }
 
-/* other */
+/* Phone */
 @media screen and (max-width: 800px) {
     #header_container{
         border: 0;

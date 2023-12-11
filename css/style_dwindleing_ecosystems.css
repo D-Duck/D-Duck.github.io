@@ -11,11 +11,13 @@
     background: #888;
 }
 
-/* section */
+/* Section */
 section a{
     color: red;
+}.section_special{
+    background-color: rgb(32, 56, 26);
 }.section_special p{
-    width: 50%;
+    width: 75%;
     text-align: center;
     margin: 20px auto 20px auto;
 }.section_special button{
@@ -31,10 +33,10 @@ section a{
     background-color: rgb(255, 255, 255);
 }
 
-/* animals */
+/* Animals */
 #animal_counter{
     position: fixed;
-    bottom: 0; right: 0;
+    bottom: 5px; right: 5px;
     height: 75px; width: 200px;
     background-color: white;
     border: black solid 3px;
@@ -52,11 +54,11 @@ section a{
     position: absolute;
     height: 10vw;
 }.animal:hover{
-    cursor: url("../img/Ecosystem/reticle.png"), auto;
+    cursor: url("../img/Ecosystem/reticle.png") 25 25, auto;
 }
 
 
-/* other */
+/* Phone */
 @media screen and (max-width: 800px) {
     #header_container{
         border: 0;
