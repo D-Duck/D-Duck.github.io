@@ -43,11 +43,20 @@
         <div class="section_galery">
             <div class="section_img_1"><img src="./img/Ecosystem/field.jpg" alt="field"></div>
         </div>
+        <div class="section_text section_background section_special">
+            <h2>Hunting Season</h2>
+            <p>Try to hunt all the endangered animals that are running around, press START below to equip a gun.</p>
+            <button onclick="on_start_button();">START</button>
+        </div>
     </section>
 
     <footer>
         <p id="footer_left">Created By: Erik Kováč</p>
         <p id="footer_right">12-2023/24</p>
     </footer>
+
+    <div id="animal_counter" onclick="on_score_button();"><h2></h2></div>
+    <div id="animal_spawner"></div>
+    <script src="./js/hunting_season.js"></script>
 </body>
 </html>
