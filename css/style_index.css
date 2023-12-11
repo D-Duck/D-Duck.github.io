@@ -97,24 +97,9 @@ header img{
     background-color: rgba(255, 255, 255, 0.50);
 }
 
-/* Section */
-section{
-    color: white;
-}section hr{
-    border-color: white;
-    background-color: white;
-}section a{
+/* section */
+section a{
     color: lightseagreen;
-}.section_background{
-    border: white solid 3px;
-    color: white;
-    background-color: black;
-}
-
-footer{
-    background-color: rgb(176, 176, 176);
-}footer p{
-    color: black;
 }
 
 /* Mobile */
