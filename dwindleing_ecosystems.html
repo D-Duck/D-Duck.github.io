@@ -11,16 +11,21 @@
 <body>
     <!-- Header -->
     <header>
-        <div id="main_page">
-            <a href="./index.html">
-                <img src="./img/planet.png" alt="planet">
-                <p>Main Page</p>
-            </a>
-        </div>
-        <div id="header_container">
-            <a href="./climate_change.html"><p>Climate Change</p></a>
-            <a href="./polution.html"><p>Polution</p></a>
-            <a href="./rising_sea_levels.html"><p>Rising Sea Levels</p></a>
+        <div id="header_center">
+            <div id="main_page">
+                <a href="./index.html">
+                    <img src="./img/planet.png" alt="planet">
+                    <h1>Main Page</h1>
+                </a>
+            </div>
+            <div id="header_hamburger">
+                <img src="./img/hamburger.png" alt="hamburger" onclick="on_hamburger_click()">
+            </div>
+            <div id="header_container">
+                <p><a href="./climate_change.html">Climate Change</a></p>
+                <p><a href="./pollution.html">Pollution</a></p>
+                <p><a href="./rising_sea_levels.html">Rising Sea Levels</a></p>
+            </div>
         </div>
     </header>
 
@@ -55,12 +60,15 @@
     <!-- Footer -->
     <footer>
         <p id="footer_left">Created By: Erik Kováč</p>
+        <a href="mailto:kovac@student.sk">Message The Dev</a>
         <p id="footer_right">12-2023/24</p>
     </footer>
 
     <!-- Animals -->
     <div id="animal_counter" onclick="on_score_button();"><h2></h2></div>
-    <div id="animal_spawner"></div>
+    <div id="animal_spawner">
+    </div>
     <script src="./js/hunting_season.js"></script>
+    <script src="./js/shared.js"></script>
 </body>
 </html>

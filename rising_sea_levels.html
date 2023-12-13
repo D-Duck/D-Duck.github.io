@@ -11,16 +11,21 @@
 <body>
     <!-- Header -->
     <header>
-        <div id="main_page">
-            <a href="./index.html">
-                <img src="./img/planet.png" alt="planet">
-                <p>Main Page</p>
-            </a>
-        </div>
-        <div id="header_container">
-            <a href="./climate_change.html"><p>Climate Change</p></a>
-            <a href="./polution.html"><p>Polution</p></a>
-            <a href="./dwindleing_ecosystems.html"><p>Dwindleing Ecosystems</p></a>
+        <div id="header_center">
+            <div id="main_page">
+                <a href="./index.html">
+                    <img src="./img/planet.png" alt="planet">
+                    <h1>Main Page</h1>
+                </a>
+            </div>
+            <div id="header_hamburger">
+                <img src="./img/hamburger.png" alt="hamburger" onclick="on_hamburger_click()">
+            </div>
+            <div id="header_container">
+                <a href="./climate_change.html"><p>Climate Change</p></a>
+                <a href="./pollution.html"><p>Pollution</p></a>
+                <a href="./dwindleing_ecosystems.html"><p>Dwindleing Ecosystems</p></a>
+            </div>
         </div>
     </header>
 
@@ -46,12 +51,30 @@
             <div class="section_img_2"><img src="./img/Sea/floded_town.jpg" alt="bear on small ice"></div>
             <div class="section_img_2"><img src="./img/Sea/floded_city.png  " alt="ice caps"></div>
         </div>
+        <div class="section_text section_background">
+            <h2>Some places that are in danger of being floded are:</h2>
+            <ol>
+                <li><p><strong>Bangladesh</strong>: Large parts of this low-lying country, including cities like Dhaka and coastal regions such as Khulna and Chittagong, are highly vulnerable due to their low elevation.</p></li>
+                <li><p><strong>Miami, Florida, USA</strong>: Miami is already experiencing issues related to rising sea levels. With a significant increase, areas including Miami Beach and parts of downtown Miami could face extensive flooding and damage.</p></li>
+                <li><p><strong>Venice, Italy</strong>: This historic city is susceptible to flooding, and a considerable rise in sea level would exacerbate the ongoing challenges Venice faces in protecting its infrastructure and cultural heritage.</p></li>
+                <li><p><strong>Pacific Island Nations</strong>: Nations like the Marshall Islands, Tuvalu, Kiribati, and the Maldives are already dealing with the impacts of rising seas. Further sea-level rise could threaten their existence and displacement of populations.</p></li>
+                <li><p><strong>Nile Delta, Egypt</strong>: The densely populated Nile Delta, including cities like Alexandria and Cairo, could face increased flooding and saltwater intrusion if sea levels rise significantly.</p></li>
+                <li><p><strong>Netherlands</strong>: While the country has extensive flood protection measures, a substantial rise in sea level could threaten low-lying areas like Rotterdam and parts of Amsterdam.</p></li>
+                <li><p><strong>Shanghai, China</strong>: This major economic hub, located on the Yangtze River Delta, is vulnerable to sea-level rise, potentially impacting millions of residents.</p></li>
+                <li><p><strong>Kiribati</strong>: This island nation in the Pacific is particularly vulnerable due to its low-lying nature, and even a moderate sea-level rise could threaten its habitability.</p></li>
+                <li><p><strong>Bangkok, Thailand</strong>: The city is situated on low-lying land and could face increased risks of flooding and saltwater intrusion with a significant rise in sea levels.</p></li>
+                <li><p><strong>The Maldives</strong>: With its maximum natural elevation of just a few feet above sea level, the Maldives is highly susceptible to submersion and could be among the first nations significantly affected by rising sea levels.</p></li>
+            </ol>
+        </div>
     </section>
 
     <!-- Header -->
     <footer>
         <p id="footer_left">Created By: Erik Kováč</p>
+        <a href="mailto:kovac@student.sk">Message The Dev</a>
         <p id="footer_right">12-2023/24</p>
     </footer>
+
+    <script src="./js/shared.js"></script>
 </body>
 </html>

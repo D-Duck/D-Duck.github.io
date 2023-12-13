@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style_shared.css">
+    <link rel="stylesheet" href="./css/style_pollution.css">
+    <link rel="icon" href="./img/planet.png">
+    <title>EID - Pollution</title>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div id="header_center">
+            <div id="main_page">
+                <a href="./index.html">
+                    <img src="./img/planet.png" alt="planet">
+                    <h1>Main Page</h1>
+                </a>
+            </div>
+            <div id="header_hamburger">
+                <img src="./img/hamburger.png" alt="hamburger" onclick="on_hamburger_click()">
+            </div>
+            <div id="header_container">
+                <a href="./climate_change.html"><p>Climate Change</p></a>
+                <a href="./rising_sea_levels.html"><p>Rising Sea Levels</p></a>
+             <a href="./dwindleing_ecosystems.html"><p>Dwindleing Ecosystems</p></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section -->
+    <section>
+        <h1>Pollution</h1>
+        <hr>
+        <div class="section_text section_background">
+            <h2>It's all around you !</h2>
+            <p>Pollution on Earth has reached a critical juncture, posing severe threats to the delicate balance of our ecosystems and human health. From the fouling of our oceans with plastic debris to the noxious fumes choking our skies, the scale and variety of pollutants have escalated to alarming levels. Air pollution, primarily from vehicle emissions, industrial processes, and burning fossil fuels, blankets cities worldwide, leading to respiratory diseases and exacerbating climate change. Water bodies are contaminated with toxic chemicals, sewage, and plastic waste, endangering marine life and jeopardizing the safety of our drinking water. The exponential increase in electronic waste further compounds the issue, leaching harmful substances into soil and water. The pervasive nature of pollution infiltrates every corner of the planet, underscoring the urgent need for concerted global action to reverse this trend and safeguard the future of our planet.</p>
+            <p>The cumulative impact of widespread pollution has inflicted irreversible damage on Earth's ecosystems, leaving an indelible mark on the planet's biodiversity and overall health. The continuous emission of greenhouse gases has led to unprecedented climate change, resulting in rising temperatures, melting polar ice caps, erratic weather patterns, and sea-level rise. The contamination of land, water, and air has caused irreversible harm to countless species, driving many to the brink of extinction and disrupting entire ecosystems. Coral reefs, vital marine habitats teeming with life, are bleaching and dying due to ocean acidification and pollution. Deforestation, largely driven by human activities, has irreversibly altered landscapes, leading to habitat loss and threatening the existence of numerous plant and animal species. The extinction crisis, accelerated by pollution and habitat destruction, represents a loss of biodiversity that cannot be recovered. The effects of pollution have left scars on the planet that serve as a stark reminder of the urgent need for immediate and concerted efforts to mitigate further damage and restore balance to our fragile ecosystems.</p>
+        </div>
+        <div class="section_galery">
+            <div class="section_img_1"><img src="./img/Pollution/animal_stuck_in_plastic.jpg" alt="global warming"></div>
+        </div>
+        <div class="section_text section_background section_table">
+            <h2>Air Quality table for PM2.5</h2>
+            <p>Particulate matter, (PM) in particular PM2.5 is the classification of fine inhalable particles, with diameters that are generally 2.5 micrometers and smaller. In comparison, human hair ranges from 50-70 micrometers which makes the fine particulate matter, PM2.5 in this case, 30 times smaller in size and hence inhalable.</p>
+            <table>
+                <tr>
+                    <th>Air Quality</th>
+                    <th>MIN</th>
+                    <th>MAX</th>
+                </tr>
+                <tr>
+                    <td>Good</td>
+                    <td>0</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td>Satisfactory</td>
+                    <td>30</td>
+                    <td>60</td>
+                </tr>
+                <tr>
+                    <td>Moderate</td>
+                    <td>60</td>
+                    <td>90</td>
+                </tr>
+                <tr>
+                    <td>Poor</td>
+                    <td>90</td>
+                    <td>120</td>
+                </tr>
+                <tr>
+                    <td>Very Poor</td>
+                    <td>120</td>
+                    <td>250</td>
+                </tr>
+                <tr>
+                    <td>Severe</td>
+                    <td>250</td>
+                    <td>380</td>
+                </tr>
+            </table>
+        </div>
+        <div class="section_text section_background">
+            <h2>Can we do anything about it ?</h2>
+            <p>Addressing the multifaceted crisis of pollution demands a concerted global effort, where collaborative solutions transcend borders and ideologies. Implementing sustainable practices, transitioning to renewable energy sources, and enacting stringent environmental policies are pivotal steps towards mitigating pollution's impact. Embracing cleaner technologies, reducing reliance on fossil fuels, and investing in eco-friendly initiatives can significantly curb emissions and alleviate the strain on our planet. Moreover, promoting conservation efforts, restoring degraded ecosystems, and adopting circular economies to minimize waste generation are crucial strategies in combating pollution. However, the challenge lies in achieving global consensus and commitment, which is hindered by the current geopolitical landscape characterized by differing priorities, conflicting interests, and varying levels of environmental awareness among nations. Political complexities, economic disparities, and lack of unified action pose substantial barriers to enacting comprehensive measures to combat pollution effectively. The urgency of this issue demands cohesive collaboration and unwavering dedication from all nations, making it imperative to transcend geopolitical divides and prioritize the preservation of our planet for future generations.</p>
+        </div>
+        <div class="section_galery">
+            <div class="section_img_2"><img src="./img/Pollution/coal_powerplant.webp" alt="global warming"></div>
+            <div class="section_img_2"><img src="./img/Pollution/water_pollution.png" alt="global warming"></div>
+        </div>
+    </section>
+
+    <!-- Smoke -->
+    <div id="smoke_screen"></div>
+    <div id="factory_wrapper"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p id="footer_left">Created By: Erik Kováč</p>
+        <a href="mailto:kovac@student.sk">Message The Dev</a>
+        <p id="footer_right">12-2023/24</p>
+    </footer>
+    
+    <script src="./js/smoke.js"></script>
+    <script src="./js/shared.js"></script>
+</body>
+</html>

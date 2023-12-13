@@ -113,6 +113,7 @@ section a{
         font-size: 20px;
         left: 10%;
         width: calc(80% - 15px);
+        height: 25px;
     }#link_L{
         top: calc(40vw + 0em);
         left: 10%;

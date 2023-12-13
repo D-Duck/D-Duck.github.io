@@ -1,12 +1,17 @@
 var animal_counter = document.getElementById("animal_counter");
 var counter_text = animal_counter.children[0];
 var animal_spawner = document.getElementById("animal_spawner");
+var first = true;
 
 // Initial speed of animals
 var speed = 2;
 
 // on start game button pressed
 function on_start_button(){
+    // alert the player about the atrocities they are about to commit
+    if (first){ 
+        alert("You are about to kill innocent animals purely for your enjoyment are you okay with that ?")
+    }
     if (animal_spawner.children.length == 0){
         animal_counter.style.display = "block";  // unhide score
         create_animal();
