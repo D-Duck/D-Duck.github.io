@@ -33,11 +33,32 @@ section a{
 }.section_special button:active{
     background-color: rgb(255, 255, 255);
 }
+.section_special_input{
+    width: 96%;
+    border: white solid 1px;
+    margin: auto;
+    border-radius: 50px;
+    margin-left: 2%; margin-bottom: 25px;
+    display: flex;
+    text-align: center;
+}.input_field input{
+    border: transparent solid 2px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 50px;
+    height: 25px;
+    background-color: white;
+}.score_table{
+    position: relative;
+    width: 96%;
+    margin: auto; margin-bottom: 25px;
+}
 
 /* Animals */
 #animal_counter{
     position: fixed;
-    bottom: 5px; right: 5px;
+    bottom: 5px; left: 5px;
     height: 75px; width: 200px;
     background-color: white;
     border: black solid 3px;
@@ -69,5 +90,7 @@ section a{
         border: white solid 3px;
     }.animal{
         height: 100px;
+    }.section_special_input{
+        display: block;
     }
 }

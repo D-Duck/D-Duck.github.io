@@ -53,7 +53,22 @@
         <div class="section_text section_background section_special">
             <h2>Hunting Season</h2>
             <p>Don't let any endangered animal escape this page, you will be given a gun after you press START and the animals will be released one by one. But be careful each animal will get faster and faster</p>
-            <button onclick="on_start_button();">START</button>
+            <div class="section_special_input">
+                <div class="input_field">
+                    <label for="input_name">Name</label>
+                    <input id="input_name" type="text" required minlength="2" maxlength="20"  name="input_name" placeholder="Name">
+                </div>
+                <div class="input_field">
+                    <label for="input_email">Email</label>
+                    <input id="input_email" type="email" required minlength="4" maxlength="30"  name="input_email" placeholder="YourMail@mail.com">
+                </div>
+                <div class="input_field ">
+                    <label id="input_terms_text"  for="input_terms">You agree with out rerms and conditions</label>
+                    <input id="input_terms" type="checkbox"  name="input_terms">
+                </div>
+            </div>
+            <button onclick="on_start_button();" type="submit">START</button>
+            <div id="score_table"></div>
         </div>
     </section>
 

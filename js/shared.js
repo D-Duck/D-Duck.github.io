@@ -1,6 +1,7 @@
 var header_target = document.getElementById("header_container");
 var state = true;
 
+// Hamburger interaction
 function on_hamburger_click(){
     state = !state
     if (state){
@@ -14,6 +15,7 @@ function on_hamburger_click(){
     }
 }
 
+// Accordeon interaction
 var acc = document.getElementsByClassName("accordion");
 for (i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function() {
@@ -21,9 +23,33 @@ for (i = 0; i < acc.length; i++) {
 
     var panel = this.nextElementSibling;
     if (panel.style.display === "block") {
-      panel.style.display = "none";
+        panel.style.display = "none";
     } else {
-      panel.style.display = "block";
+        panel.style.display = "block";
     }   
-  });
+    });
+}
+
+// slideshow interactions
+var slideIndex = 0;
+var stopped = false;
+showSlides();
+
+function showSlides() {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+
+    slideIndex++;
+    if (slideIndex > slides.length) {
+        slideIndex = 1
+    }
+
+    slides[slideIndex-1].style.display = "block";
+    if (!stopped){
+        setTimeout(showSlides, 5000);
+    }
 }

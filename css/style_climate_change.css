@@ -44,6 +44,28 @@
     overflow: hidden;
 }
 
+
+/* neww  ================================================ */
+
+.slideshow-container {
+    position: relative;
+    margin: auto;
+    border-radius: 55px;
+    padding-right: 5px;
+}.slideshow-container img{
+    animation: none;
+    filter: grayscale(0%);
+}.mySlides {
+  display: none;
+}.slideshow-container img:hover{
+    animation: none;
+    filter: grayscale(0%);
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++ */
+
+
+
 /* Phone */
 @media screen and (max-width: 800px) {
     #header_container{

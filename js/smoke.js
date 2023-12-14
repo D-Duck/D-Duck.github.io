@@ -3,6 +3,7 @@ var target_particle_size = 200;
 var particle_container = document.getElementById("smoke_screen");
 var target_height = document.documentElement.scrollHeight + target_particle_size;
 var last_viewport_update = document.documentElement.scrollWidth;
+var smoke_switch_btn = document.getElementById("smoke_switch").children[0];
 var frozen = false;
 // stores this values [x, y, particle_size]
 var smoke_data = [];
@@ -94,6 +95,23 @@ function viewportUpdate(force=false){
 
         for (var index=0; index!=(smoke_data.length-1); index++) {
             smoke_data[index] = generateParticleData()
+        }
+    }
+}
+
+// switch smoke on/off
+function smoke_switch(){
+    frozen = !frozen
+
+    if (frozen){
+        smoke_switch_btn.textContent = "off"
+        for (const child of particle_container.children) {
+            child.style.opacity = "0";
+        }
+    }else{
+        smoke_switch_btn.textContent = "on"
+        for (const child of particle_container.children) {
+            child.style.opacity = "0.2";
         }
     }
 }

@@ -1,7 +1,13 @@
 var animal_counter = document.getElementById("animal_counter");
 var counter_text = animal_counter.children[0];
 var animal_spawner = document.getElementById("animal_spawner");
-var first = true;
+
+var name_ = document.getElementById("input_name");
+var mail_ = document.getElementById("input_email");
+var terms_ = document.getElementById("input_terms");
+var term_text = document.getElementById("input_terms_text");
+
+var score_table = document.getElementById("score_table");
 
 // Initial speed of animals
 var speed = 2;
@@ -9,15 +15,14 @@ var speed = 2;
 // on start game button pressed
 function on_start_button(){
     // alert the player about the atrocities they are about to commit
-    if (first){ 
-        alert("You are about to kill innocent animals purely for your enjoyment are you okay with that ?")
-    }
-    if (animal_spawner.children.length == 0){
-        animal_counter.style.display = "block";  // unhide score
-        create_animal();
-        speed = 2;
-        counter_text.textContent = "0";  // set score to 0
-        animal_counter.style.backgroundColor = "white";
+    if (test_input_form()){
+        if (animal_spawner.children.length == 0){
+            animal_counter.style.display = "block";  // unhide score
+            create_animal();
+            speed = 2;
+            counter_text.textContent = "0";  // set score to 0
+            animal_counter.style.backgroundColor = "white";
+        }
     }
 }
 
@@ -25,6 +30,7 @@ function on_start_button(){
 function on_score_button(){
     animal_counter.style.display = "none";  //hide score
     animal_spawner.children[0].remove();  // delete remaining animals
+    add_score_entry()
 }
 
 // on animal button pressed
@@ -58,6 +64,7 @@ function create_animal(){
 
 // update animal
 function update_animal(){
+
     let border_offset = document.body.clientWidth * 0.1;  //aproximate width of animals
     let spd = parseInt(speed);
 
@@ -70,18 +77,61 @@ function update_animal(){
             if (x < -border_offset){
                 child.remove();
                 animal_counter.style.backgroundColor = "red";
+                add_score_entry()
             }
         }else{
             x += spd;
             if (x > animal_spawner.offsetWidth){
                 child.remove();
                 animal_counter.style.backgroundColor = "red";
+                add_score_entry()
             }
         }
 
         child.style.left = String(x)  + "px";
         index++;
     }
+}
+
+// function to test form
+function test_input_form(){
+    let out = true;
+
+    // test for name
+    if (name_.value.length > 2){
+        name_.style.borderColor = "white";
+    }else{
+        out = false;
+        name_.style.borderColor = "red";
+    }
+    // test for mail    
+    if (mail_.value.length > 8 && mail_.value.includes("@") && mail_.value.includes(".")){
+        mail_.style.borderColor = "white";
+    }else{
+        out = false;
+        mail_.style.borderColor = "red";
+    }
+    // test for terms and conditions
+    if (terms_.checked){
+        term_text.style.color = "white";
+    }else{
+        out = false;
+        term_text.style.color = "red";
+    }
+
+    // check if out is false
+    if (!out) {
+        alert("Some fields are incorrect, they are highlited in red.")
+    }
+
+    return out;
+}
+
+// add score to page when game over
+function add_score_entry(){
+    let text = document.createElement("p");
+    text.textContent = `${name_.value} : ${parseInt(counter_text.textContent)}`
+    score_table.appendChild(text)
 }
 
 // set interval for update function

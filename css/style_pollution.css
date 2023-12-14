@@ -20,11 +20,24 @@ section a{
 /* Smoke */
 #smoke_screen{
     width: 100%;
+    height: 100%;
+    overflow: hidden;
 }.smoke{
     pointer-events: none;
-    overflow: hidden;
     position: absolute;
     transform: translate(0px, 0px);
+}#smoke_switch{
+    width: 50px; height: 50px;
+    background-color: white;
+    border-radius: 25px;
+    border: black solid 3px;
+    position: fixed;
+    bottom: 25px; left: 5px;
+}#smoke_switch p{
+    margin: auto; margin-top: 10px;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 20px;
 }
 
 /* Factory */
@@ -38,7 +51,6 @@ section a{
 }#factory_wrapper{
     width: 100%;
     height: 100px;
-    background-color: rgb(86, 134, 193);
     background-image: url("../img/Pollution/factory_bg.png");
     background-repeat: repeat-x;
     background-position: bottom;
@@ -62,5 +74,7 @@ footer{
     }#header_container p{
         background-color: transparent;
         border: white solid 3px;
+    }#smoke_switch{
+        display: none;
     }
 }
