@@ -12,17 +12,13 @@
     background: #888;
 }
 
-/* Section */
-section a{
-    color: red;
-}
-
 /* Smoke */
 #smoke_screen{
     width: 100%;
     height: 100%;
     overflow: hidden;
 }.smoke{
+    -webkit-user-drag: none;
     pointer-events: none;
     position: absolute;
     transform: translate(0px, 0px);

@@ -11,11 +11,6 @@
     background: #888;
 }
 
-/* Section */
-section a{
-    color: red;
-}
-
 /* Phone */
 @media screen and (max-width: 800px) {
     #header_container{

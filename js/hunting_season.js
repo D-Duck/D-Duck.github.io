@@ -10,16 +10,16 @@ var term_text = document.getElementById("input_terms_text");
 var score_table = document.getElementById("score_table");
 
 // Initial speed of animals
-var speed = 2;
+var speed = 3;
 
 // on start game button pressed
 function on_start_button(){
-    // alert the player about the atrocities they are about to commit
+    // test if form is filled out
     if (test_input_form()){
         if (animal_spawner.children.length == 0){
             animal_counter.style.display = "block";  // unhide score
             create_animal();
-            speed = 2;
+            speed = 3;
             counter_text.textContent = "0";  // set score to 0
             animal_counter.style.backgroundColor = "white";
         }
@@ -98,12 +98,12 @@ function test_input_form(){
     let out = true;
 
     // test for name
-    if (name_.value.length > 2){
-        name_.style.borderColor = "white";
-    }else{
-        out = false;
-        name_.style.borderColor = "red";
-    }
+        if (name_.value.length > 2){
+            name_.style.borderColor = "white";
+        }else{
+            out = false;
+            name_.style.borderColor = "red";
+        }
     // test for mail    
     if (mail_.value.length > 8 && mail_.value.includes("@") && mail_.value.includes(".")){
         mail_.style.borderColor = "white";
@@ -121,10 +121,15 @@ function test_input_form(){
 
     // check if out is false
     if (!out) {
-        alert("Some fields are incorrect, they are highlited in red.")
+        setTimeout(alertt, 10)
     }
 
     return out;
+}
+
+// It's in a separate function due to some visual misshaps
+function alertt(){
+    alert("Some fields are incorrect, they are highlited in red.")
 }
 
 // add score to page when game over

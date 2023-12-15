@@ -12,7 +12,7 @@ var smoke_data = [];
 function createSmoke(){
     // set image properties
     let particle = document.createElement("img");
-    particle.src = "./img/Pollution/smoke.png";
+    particle.src = `./img/Pollution/smoke${Math.floor(Math.random() * 4)}.png`;
     particle.className = "smoke";
     particle.style.left = String(Math.floor(Math.random() * 85) + 5) + "%";
     particle.width = 0;
@@ -85,11 +85,11 @@ function viewportUpdate(force=false){
             }
         // if visible width is more then 800px
         }else{
-            frozen = false;
-
-            // sets particle visible
-            for (const child of particle_container.children) {
-                child.style.opacity = "0.2";
+            if (!frozen) {
+                // sets particle visible
+                for (const child of particle_container.children) {
+                    child.style.opacity = "0.2";
+                }
             }
         }
 
@@ -132,6 +132,6 @@ for (var count=0; count<400; count++){
 
 viewportUpdate(true)
 // set interval for update_smoke()
-window.setInterval(update_smoke, 1);
+window.setInterval(update_smoke, 30);
 // set event listener
 visualViewport.addEventListener("resize", viewportUpdate);

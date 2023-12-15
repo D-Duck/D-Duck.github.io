@@ -30,40 +30,38 @@
     margin-left: 25px;
     padding: 18px;
     text-align: left;
+    text-align: center;
+    font-size: 20px;
     border: none;
     outline: none;
     transition: 0.4s;
 }.active, .accordion:hover {
     background-color: rgb(255, 8, 0);
 }.panel {
-    width: calc(100% - 50px);;
+    width: calc(100% - 150px);;
     margin-left: 25px;
     background-color: rgb(255, 130, 130);
     color: black;
     display: none;
     overflow: hidden;
+    padding: 20px 50px 20px 50px;
 }
 
-
-/* neww  ================================================ */
-
-.slideshow-container {
+/* slideshow */
+.slideshow {
     position: relative;
     margin: auto;
     border-radius: 55px;
     padding-right: 5px;
-}.slideshow-container img{
+}.slideshow img{
     animation: none;
     filter: grayscale(0%);
-}.mySlides {
-  display: none;
-}.slideshow-container img:hover{
+}.slides {
+    display: none;
+}.slideshow img:hover{
     animation: none;
     filter: grayscale(0%);
 }
-
-/* ++++++++++++++++++++++++++++++++++++++++ */
-
 
 
 /* Phone */

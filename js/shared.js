@@ -16,40 +16,44 @@ function on_hamburger_click(){
 }
 
 // Accordeon interaction
-var acc = document.getElementsByClassName("accordion");
-for (i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
+var accordeon = document.getElementsByClassName("accordion");
+var count;
 
+// bind "when_clicked" function to each section
+for (count = 0; count < accordeon.length; count++) {
+  accordeon[count].addEventListener("click", when_clicked);
+}
+
+function when_clicked(){
+    this.classList.toggle("active");
     var panel = this.nextElementSibling;
+
     if (panel.style.display === "block") {
         panel.style.display = "none";
     } else {
         panel.style.display = "block";
-    }   
-    });
+    }
 }
 
 // slideshow interactions
 var slideIndex = 0;
-var stopped = false;
-showSlides();
+if (document.getElementsByClassName("slideshow").length > 0) {showSlides();}
 
 function showSlides() {
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
+    let slides = document.getElementsByClassName("slides");
+    let count;
 
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
+    // update which slide is visible
+    for (count = 0; count < slides.length; count++) {
+      slides[count].style.display = "none";
     }
 
+    // change index
     slideIndex++;
     if (slideIndex > slides.length) {
         slideIndex = 1
     }
-
+    
     slides[slideIndex-1].style.display = "block";
-    if (!stopped){
-        setTimeout(showSlides, 5000);
-    }
+    setTimeout(showSlides, 5000);
 }

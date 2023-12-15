@@ -13,9 +13,7 @@
 }
 
 /* Section */
-section a{
-    color: red;
-}.section_special{
+.section_special{
     background-color: rgb(32, 56, 26);
 }.section_special p{
     width: 75%;
@@ -23,11 +21,10 @@ section a{
     margin: 20px auto 20px auto;
 }.section_special button{
     position: relative;
-    margin: 20px auto 20px auto;
     width: 200px; height: 75px;
     border-radius: 50px;
     margin: calc(50% - 100px);
-    margin-top: 0; margin-bottom: 20px;
+    margin-top: 0; margin-bottom: 0;
 }.section_special button:hover{
     background-color: rgb(167, 167, 167);
 }.section_special button:active{
@@ -73,6 +70,8 @@ section a{
 }#animal_spawner{
     width: 100%;
 }.animal{
+    -webkit-user-drag: none;
+    pointer-events:painted;
     position: absolute;
     height: 10vw;
 }.animal:hover{
