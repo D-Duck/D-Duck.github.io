@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/2156beb6-99d0-4662-91b8-94128424ee6e)# **Databázové technológie ETL projekt chinook**
+**Databázové technológie ETL projekt chinook**
 
 **Autor**: Erik Kováč
 
