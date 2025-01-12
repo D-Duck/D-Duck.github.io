@@ -243,23 +243,17 @@ GROUP BY dt.len;
 
 --- 
 
-### **4.3 Počet nákupov podla národnosťí**
- Táto vizualizácia ponúka pohľad na rozdelenie počtu nákupov podľa národnosti zákazníkov.Výsledky sú zoradené podľa počtu nákupov v zostupnom poradí, čo umožňuje identifikovať najvýznamnejšie národnosti z hľadiska zákazníckeho správania. 
+### **4.3 Songs In Price Bracket**
+Táto vizualizácia poskytuje prehľad o rozdelení počtu skladieb podľa cenových kategórií. Výsledky sú zoradené podľa počtu skladieb v jednotlivých cenových kategóriách, konkrétne 0.99 a 1.99, čo umožňuje identifikovať, ktorá cenová kategória je najpopulárnejšia medzi zákazníkmi.
+ 
  ```sql
-SELECT
-     dc.nationality, COUNT(fi.id_invoice) AS total_purchases
-FROM
-      fact_invoice fi
-JOIN
-      dim_customer dc ON fi.dim_customer_id = dc.id_customer
-GROUP BY
-      dc.nationality
-ORDER BY
-     total_purchases DESC; 
+SELECT unit_price as Price, SUM(quantity) AS Quantity
+FROM fact_invoice
+GROUP BY unit_price;
 ```
 
 <p align="center">
-  <img src="https://github.com/PalcivaPapricka/DT_projekt_chinook/blob/main/Vizualization%20screenshots/PredajePodlaNarodnosti.PNG" alt="ERD Schema">
+  <img src="https://github.com/D-Duck/SCHL_ChinukETL/blob/main/png/SongsInPriceBracket.PNG" alt="ERD Schema">
   <br>
   <em> Star schema Chinook </em>
 </p>
@@ -267,23 +261,25 @@ ORDER BY
 
 ---    
 
-### **4.4 Ročná priemerná hodnota objednávky**
- Táto vizualizácia vypočíta priemernú hodnotu faktúr pre jednotlivé roky. Spája údaje o faktúrach s tabuľkou dátumov, aby bolo možné presne určiť, do ktorého roku jednotlivé faktúry patria. Táto vizualizácia umožňuje sledovať, či dochádza k nárastu alebo poklesu priemernej hodnoty objednávok.
+### **4.4 Song Length Stats**
+ Táto vizualizácia vypočíta priemernú dĺžku skladieb a celkovú dĺžku všetkých skladieb v databáze. Spojí údaje o skladbách s ich dĺžkou, aby sa získali štatistiky, ktoré umožňujú analyzovať, či priemerná dĺžka skladieb rastie alebo klesá. Táto vizualizácia poskytuje prehľad o trendoch v dĺžkach skladieb a ich vplyve na celkový čas trvania všetkých skladieb.
+ 
  ```sql
-SELECT
-    dd.year, AVG(fi.total) AS avg_order_value
-FROM
-   fact_invoice fi
-JOIN
-   dim_date dd ON fi.dim_date_id = dd.id_date
-GROUP BY
-   dd.year
-ORDER BY
-   dd.year;
+SELECT AVG(dt.milliseconds) / 1000 / 60
+FROM fact_invoice fi
+JOIN dim_track dt ON fi.dim_track_id = dt.dim_track_id
+GROUP BY dt.len;
+
+
+
+SELECT SUM(dt.milliseconds) / 1000 / 60
+FROM fact_invoice fi
+JOIN dim_track dt ON fi.dim_track_id = dt.dim_track_id
+GROUP BY dt.len;
 ```
 
 <p align="center">
-  <img src="https://github.com/PalcivaPapricka/DT_projekt_chinook/blob/main/Vizualization%20screenshots/HodnotaNakupuzaRok.PNG" alt="ERD Schema">
+  <img src="https://github.com/D-Duck/SCHL_ChinukETL/blob/main/png/LengthStats.PNG" alt="Length stats">
   <br>
   <em> Star schema Chinook </em>
 </p>
@@ -291,29 +287,27 @@ ORDER BY
 
 ---    
 
-### **4.5 Rozdelenie príjmov za rok podľa žánrov**
- Táto vizualizácia analyzuje celkové príjmy podľa hudobného žánru v priebehu jednotlivých rokov. Pre každý rok a žáner vypočíta súčet hodnôt všetkých faktúr, ktoré súvisia so skladbami daného žánru. Výsledky sú zoradené chronologicky podľa roku a zároveň zostupne podľa príjmov pre jednotlivé žánre, čím sa zviditeľnia najúspešnejšie žánre v danom období. 
+### **4.5 Sales Stats**
+ Táto vizualizácia analyzuje celkové predaje za jednotlivé roky, ako aj predaje za najnovší rok 2025. Pre každý rok vypočíta súčet hodnôt všetkých predajov, pričom porovnáva výsledky za celý časový rámec s predajmi v roku 2025. Výsledky sú zoradené chronologicky podľa rokov a zároveň umožňujú získať prehľad o najnovších trendoch v predajoch, čo umožňuje identifikovať zmeny v predajnom výkone v porovnaní s minulými rokmi.
+ 
  ```sql
-SELECT
-   dt.genre_name, dd.year, SUM(fi.total) AS total_revenue
-FROM
-   fact_invoice fi
-JOIN
-   dim_track dt ON fi.dim_track_id = dt.id_track
-JOIN
-   dim_date dd ON fi.dim_date_id = dd.id_date
-GROUP BY
-   dt.genre_name, dd.year
-ORDER BY
-   dd.year, total_revenue DESC;
+SELECT dd.years, COUNT(*) AS Sales_Count
+FROM fact_invoice t
+JOIN dim_date dd ON dd.date_id = t.dim_date_id
+GROUP BY dd.years;
+
+
+
+SELECT dd.month_as_string AS month, COUNT(fi.fact_invoice_id) AS sales_count, dd.months
+FROM fact_invoice fi
+JOIN dim_date dd ON fi.dim_date_id = dd.date_id
+WHERE dd.years = 2025
+GROUP BY dd.month_as_string, dd.months
+ORDER BY dd.months;
 ```
 
 <p align="center">
-  <img src="https://github.com/PalcivaPapricka/DT_projekt_chinook/blob/main/Vizualization%20screenshots/TrzbaPodlaZanru.png" alt="ERD Schema">
+  <img src="https://github.com/D-Duck/SCHL_ChinukETL/blob/main/png/Sales.PNG" alt="sales stats">
   <br>
   <em> Star schema Chinook </em>
 </p>
-
-
-
-Autor: Viktor Kramár
