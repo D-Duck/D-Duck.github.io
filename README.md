@@ -56,87 +56,122 @@ Navrhnutý bol **hviezdicový model (star schema)**, pre efektívnu analýzu kde
 
 ---
 ## **3. ETL proces v Snowflake**
-ETL proces v Snowflake pozostával z troch hlavných fáz: extrahovanie (Extract), transformácia (Transform) a načítanie (Load). Tento proces slúžil na spracovanie zdrojových dát zo staging vrstvy do viacdimenzionálneho modelu vhodného na analýzu a vizualizáciu.
+ETL proces v Snowflake zahŕňal tri hlavné fázy: extrakciu (Extract), transformáciu (Transform) a načítanie (Load). Tento postup umožnil spracovanie zdrojových dát zo staging vrstvy do viacdimenzionálneho modelu, ktorý je vhodný na analýzu a vizualizáciu.
 
 ---
 ### **3.1 Extract (Extrahovanie dát)**
-Dáta zo zdrojových súborov vo formáte .csv boli nahrané do Snowflake do dočasného úložiska nazvaného TEMP_STAGE. Pred nahraním dát bola inicializovaná databáza, dátový sklad a schéma. Následné kroky zahŕňali nahratie údajov do staging tabuliek. Proces bol inicializovaný pomocou nasledujúcich príkazov:
+Dáta zo zdrojových súborov vo formáte .csv boli uložené do Snowflake v dočasnom úložisku TEMP_STAGE. Pred týmto krokom bola inicializovaná databáza, dátový sklad a schéma. Následne boli údaje nahrané do staging tabuliek. Proces bol spustený pomocou nasledujúcich príkazov:
 
 ```sql
-CREATE DATABASE IF NOT EXISTS SWORDFISH_CHINOOK;
-USE DATABASE SWORDFISH_CHINOOK;
-
-CREATE WAREHOUSE IF NOT EXISTS SWORDFISH_CHINOOK_WAREHOUSE;
-USE WAREHOUSE SWORDFISH_CHINOOK_WAREHOUSE;
-
-CREATE SCHEMA IF NOT EXISTS SWORDFISH_CHINOOK.stages;
-CREATE OR REPLACE STAGE temp_stage;
+CREATE DATABASE TURTLE_CHINOOK;
+CREATE OR REPLACE SCHEMA TURTLE_CHINOOK.staging;
 ```
 
 Kroky extrakcie dát:
 
-Vytvorenie staging tabuliek pre všetky zdrojové údaje (napr. zamestnanci, zákazníci, faktúry, skladby, žánre, atď.).  Použitie príkazu COPY INTO na nahranie dát z .csv súborov do príslušných staging tabuliek:
+Vytvorenie staging tabuliek pre všetky zdrojové údaje (napr. zamestnanci, zákazníci, faktúry, skladby, žánre a ďalšie). Použitie príkazu COPY INTO na nahranie dát z .csv súborov do príslušných staging tabuliek.
 
 Príklad pre tabuľku employee_stage:
 
 ```sql
-CREATE OR REPLACE TABLE employee_stage(
-    EmployeeId INT,
-    LastName VARCHAR(20),
-    FirstName VARCHAR(20),
-    Title VARCHAR(30),
-    ReportsTo INT,
-    BirthDate DATETIME,
-    HireDate DATETIME,
-    Address VARCHAR(70),
-    City VARCHAR(40),
-    State VARCHAR(40),
-    Country VARCHAR(40),
-    PostalCode VARCHAR(10),
-    Phone VARCHAR(24),
-    Fax VARCHAR(24),
-    Email VARCHAR(60)
+CREATE OR REPLACE TABLE employee_staging (
+    employee_id INT AUTOINCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    reports_to INT,
+    birth_date DATE NOT NULL,
+    hire_date DATE NOT NULL,
+    address STRING NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50),
+    country VARCHAR(50) NOT NULL,
+    postal_code VARCHAR(25),
+    phone VARCHAR(30),
+    fax VARCHAR(30),
+    email VARCHAR(60) NOT NULL,
+    FOREIGN KEY (reports_to) REFERENCES employee_staging(employee_id)
 );
 
-COPY INTO employee_stage
-FROM @stages.TEMP_STAGE/employee.csv
-FILE_FORMAT = (TYPE = 'CSV' SKIP_HEADER = 1);
+COPY INTO employee_staging
+FROM @PENGUIN_CHINOOK_STAGE/
+FILES = ('employee.csv')
+FILE_FORMAT = (
+    TYPE = 'CSV',
+    COMPRESSION = 'NONE',
+    FIELD_DELIMITER = ',',
+    FILE_EXTENSION = 'csv',
+    FIELD_OPTIONALLY_ENCLOSED_BY = '"',
+    SKIP_HEADER = 1,
+    ERROR_ON_COLUMN_COUNT_MISMATCH = FALSE);
 ```
 
 Rovnaký prístup sa aplikoval na všetky ostatné zdrojové dáta, pričom pre každý súbor bola vytvorená štruktúrovaná staging tabuľka.
 ---
 ### **3.2 Transfor (Transformácia dát)**
-Transformácia dát zahŕňala vyčistenie, obohatenie a reorganizáciu údajov do dimenzií a faktových tabuliek, ktoré umožňujú viacdimenzionálnu analýzu.
+Transformácia dát zahŕňala čistenie, obohacovanie a reorganizáciu údajov do dimenzií a faktových tabuliek, ktoré podporujú viacdimenzionálnu analýzu.
 
 Príklad transformácie:
 
-Dimenzia dim_date: Táto dimenzia uchováva informácie o dátumoch spojených s fakturačnými údajmi. Obsahuje odvodené atribúty ako rok, mesiac, deň, týždeň a štvrťrok.
+Dimenzia dim_date: Táto dimenzia obsahuje informácie o dátumoch súvisiacich s fakturačnými údajmi a zahŕňa odvodené atribúty ako rok, mesiac, deň, týždeň a štvrťrok.
 
 ```sql
-CREATE OR REPLACE TABLE dim_date AS
-SELECT
-    ROW_NUMBER() OVER (ORDER BY unique_dates.InvoiceDate) AS id_date,
-    EXTRACT(YEAR FROM unique_dates.InvoiceDate) AS year,
-    EXTRACT(MONTH FROM unique_dates.InvoiceDate) AS month,
-    EXTRACT(DAY FROM unique_dates.InvoiceDate) AS day,
-    EXTRACT(WEEK FROM unique_dates.InvoiceDate) AS week,
-    EXTRACT(QUARTER FROM unique_dates.InvoiceDate) AS quarter,
-    unique_dates.InvoiceDate AS timestamp
-FROM (
-    SELECT DISTINCT InvoiceDate
-    FROM invoice_stage
-) unique_dates;
+CREATE OR REPLACE TABLE dim_date (
+    date_id         INT AUTOINCREMENT PRIMARY KEY,
+    timestamp       TIMESTAMP NOT NULL,
+    years           INT       NOT NULL,
+    months          INT       NOT NULL,
+    month_as_string STRING    NOT NULL,
+    days            INT       NOT NULL,
+    day_as_string   STRING    NOT NULL,
+    is_weekend      BOOLEAN   NOT NULL
+);
+
+
+INSERT INTO dim_date (timestamp, years, months, month_as_string, days, day_as_string, is_weekend)
+SELECT invoice_date AS timestamp,
+    EXTRACT(YEAR FROM invoice_date) AS years,
+    EXTRACT(MONTH FROM invoice_date) AS months,
+    CASE 
+        WHEN EXTRACT(MONTH FROM invoice_date) = 1 THEN 'January'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 2 THEN 'February'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 3 THEN 'March'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 4 THEN 'April'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 5 THEN 'May'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 6 THEN 'June'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 7 THEN 'July'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 8 THEN 'August'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 9 THEN 'September'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 10 THEN 'October'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 11 THEN 'November'
+        WHEN EXTRACT(MONTH FROM invoice_date) = 12 THEN 'December'
+    END AS month_as_string,
+    EXTRACT(DAY FROM invoice_date) AS days,
+    CASE 
+        WHEN EXTRACT(DOW FROM invoice_date) = 0 THEN 'Sunday'
+        WHEN EXTRACT(DOW FROM invoice_date) = 1 THEN 'Monday'
+        WHEN EXTRACT(DOW FROM invoice_date) = 2 THEN 'Tuesday'
+        WHEN EXTRACT(DOW FROM invoice_date) = 3 THEN 'Wednesday'
+        WHEN EXTRACT(DOW FROM invoice_date) = 4 THEN 'Thursday'
+        WHEN EXTRACT(DOW FROM invoice_date) = 5 THEN 'Friday'
+        WHEN EXTRACT(DOW FROM invoice_date) = 6 THEN 'Saturday'
+    END AS day_as_string,
+    CASE WHEN EXTRACT(DOW FROM invoice_date) IN (0, 6) THEN TRUE ELSE FALSE END AS is_weekend
+FROM invoice_staging;
 ```
 
 Dimenzia dim_customer: Obsahuje údaje o zákazníkoch ako meno, adresa, mesto a krajina, odvodené zo staging tabuľky customer_stage.
 
 ```sql
-CREATE OR REPLACE TABLE dim_customer AS
-SELECT
-    CustomerId AS id_customer,
-    Company AS company,
-    Country AS nationality,
-FROM customer_stage;
+CREATE OR REPLACE TABLE dim_customer (
+    customer_id INT AUTOINCREMENT PRIMARY KEY,
+    first_name  STRING NOT NULL,
+    last_name   STRING NOT NULL,
+    city        STRING NOT NULL,
+    state       STRING,
+    country     STRING NOT NULL,
+    postal_code STRING,
+    email       STRING);
 ```
 
 ---    
@@ -144,17 +179,17 @@ FROM customer_stage;
 Po úspešnom vytvorení dimenzií a faktových tabuliek boli staging tabuľky odstránené, aby sa optimalizovalo úložisko. Príklad čistenia staging tabuliek:
 
 ```sql
-DROP TABLE IF EXISTS employee_stage;
-DROP TABLE IF EXISTS customer_stage;
-DROP TABLE IF EXISTS invoice_stage;
-DROP TABLE IF EXISTS invoiceline_stage;
-DROP TABLE IF EXISTS playlisttrack_stage;
-DROP TABLE IF EXISTS track_stage;
-DROP TABLE IF EXISTS genre_stage;
-DROP TABLE IF EXISTS playlist_stage;
-DROP TABLE IF EXISTS album_stage;
-DROP TABLE IF EXISTS artist_stage;
-DROP TABLE IF EXISTS mediatype_stage;
+DROP TABLE IF EXISTS artist_staging;
+DROP TABLE IF EXISTS album_staging;
+DROP TABLE IF EXISTS customer_staging;
+DROP TABLE IF EXISTS employee_staging;
+DROP TABLE IF EXISTS genre_staging;
+DROP TABLE IF EXISTS mediatype_staging;
+DROP TABLE IF EXISTS playlist_staging;
+DROP TABLE IF EXISTS track_staging;
+DROP TABLE IF EXISTS playlisttrack_staging;
+DROP TABLE IF EXISTS invoice_staging;
+DROP TABLE IF EXISTS invoiceline_staging;
 ```
 
 ---
