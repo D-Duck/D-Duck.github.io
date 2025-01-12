@@ -1,16 +1,17 @@
-# **Databázové technológie ETL projekt chinook**
+![image](https://github.com/user-attachments/assets/2156beb6-99d0-4662-91b8-94128424ee6e)# **Databázové technológie ETL projekt chinook**
 
-**Autor**: Viktor Kramár
+**Autor**: Erik Kováč
 
-Môj projekt sa zameriava na spracovanie údajov z Chinook databázy prostredníctvom ETL procesu v rámci hviezdicovej schémy.
+Môj projekt je zameraný na spracovanie údajov z databázy Chinook prostredníctvom ETL procesu, pričom dáta sú organizované v rámci hviezdicovej schémy.
 
 **Zdrojový dataset:** 
-Chinook databáza je vzorová relačná databáza, ktorá obsahuje údaje o hudobných albumoch, skladbách, umelcoch, zákazníkoch, objednávkach a faktúrach. 
-Dáta z Chinook databázy budú transformované a optimalizované na analytické účely pomocou platformy Snowflake.
+Chinook databáza je vzorová relačná databáza obsahujúca informácie o hudobných albumoch, skladbách, interpretoch, zákazníkoch, objednávkach a faktúrach.
+Údaje z tejto databázy budú transformované a optimalizované na analytické účely prostredníctvom platformy Snowflake.
 
 ---
 ## **1. Úvod a popis zdrojových dát**
-Cieľom semestrálneho projektu je analyzovať dáta v databáze Chinook, pričom sa zameriame na používateľov, ich preferencie a a kúpi skladieb . Táto analýza umožní identifikovať trendy v záujmoch používateľov, najpopulárnejšie položky (napríklad skladby alebo albumy) a správanie používateľov.
+Cieľom semestrálneho projektu je analyzovať dáta v databáze Chinook, pričom sa zameriame na používateľov, ich preferencie a a kúpi skladieb. 
+Táto analýza umožní identifikovať trendy v záujmoch používateľov, najpopulárnejšie položky (napríklad skladby alebo albumy) a správanie používateľov.
 Dataset obsahuje tabulky:
 - `playlist`: Informácie o playlistoch vytvorených užívatelmi.
 - `playlisttrack`: Spojovacia tabuľka pre playlisty a skladby.
@@ -30,7 +31,7 @@ Dataset obsahuje tabulky:
  Dáta sú usporiadané v relačnom modeli, ktorý je znázornený na **entitno-relačnom diagrame (ERD)**:
 
 <p align="center">
-  <img src="https://github.com/PalcivaPapricka/DT_projekt_chinook/blob/main/Chinook_ERD.png" alt="ERD Schema">
+  <img src="https://github.com/D-Duck/SCHL_ChinukETL/blob/main/erd/Chinook_ERD.png" alt="ERD Schema">
   <br>
   <em> Entitno-relačná schéma Chinook </em>
 </p>
@@ -42,13 +43,13 @@ Navrhnutý bol **hviezdicový model (star schema)**, pre efektívnu analýzu kde
 - **`dim_track`**: Zahŕna údaje o skladbách , albumoch , interpretoch a žánroch.
 - **`dim_customer`**: Obsahuje informácie o zákazníkoch, ktorí vykonali nákupy.
 - **`dim_employee`**: Obsahuje informácie o zamestnancoch, ktorí sa podieľali na transakciách.
-- **`dim_adress`**: Táto tabuľka obsahuje informácie o geografických lokalitách.
+- **`dim_billing_adress`**: Táto tabuľka obsahuje informácie o geografických lokalitách.
 - **`dim_date`**: Táto tabuľka poskytuje podrobnosti o čase a dátumoch pre analýzu. 
 
 
 
 <p align="center">
-  <img src="https://github.com/PalcivaPapricka/DT_projekt_chinook/blob/main/starschema.png" alt="ERD Schema">
+  <img src="https://github.com/D-Duck/SCHL_ChinukETL/blob/main/scd/star.png" alt="ERD Schema">
   <br>
   <em> Star schema Chinook </em>
 </p>
