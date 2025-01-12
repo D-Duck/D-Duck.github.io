@@ -195,57 +195,48 @@ DROP TABLE IF EXISTS invoiceline_staging;
 ---
 ## **4 Vizualizácia dát**
 <p align="center">
-  <img src="https://github.com/PalcivaPapricka/DT_projekt_chinook/blob/main/Chinook_Dashboard.PNG" alt="ERD Schema">
+  <img src="https://github.com/D-Duck/SCHL_ChinukETL/blob/main/png/ALL.PNG" alt="Dashboard">
   <br>
   <em> Dashboard Chinook datasetu </em>
 </p>
 
 ---  
 
-### **4.1 Štvrťročné príjmy**
-Táto vizualizácia poskytuje prehľad o celkových príjmoch v každom štvrťroku za jednotlivé roky. Pre zobrazenie časových období používa kombináciu roku a štvrťroka vo formáte "rok-Q(štvrťrok)" (napr. "2023-Q1"). Celkové príjmy sú vypočítané ako súčet hodnôt faktúr, ktoré sú spojené s príslušnými dátumami cez tabuľku dátumov. Tento pohľad je užitočný na analýzu sezónnych trendov v predaji, napríklad na zistenie, či určité štvrťroky vykazujú vyšší výkon ako ostatné. 
+### **4.1 Songs Per Genre**
+Transformácia dát zahŕňala čistenie, obohacovanie a reorganizáciu údajov do dimenzií a faktových tabuliek, ktoré podporujú viacdimenzionálnu analýzu.
+
+Príklad transformácie:
+Dimenzia dim_genre: Táto dimenzia uchováva informácie o jednotlivých hudobných žánroch a počte skladieb prislúchajúcich každému žánru. 
+Obsahuje odvodené atribúty ako názov žánru, celkový počet skladieb a priemerná dĺžka skladieb v rámci žánru.
 
 ```sql
-SELECT 
-    CONCAT(d.year, '-Q', d.quarter) AS year_quarter,
-    SUM(f.total) AS total_revenue
-FROM 
-    fact_invoice f
-JOIN 
-    dim_date d ON f.dim_date_id = d.id_date
-GROUP BY 
-    d.year, d.quarter
-ORDER BY 
-    d.year, d.quarter;
+SELECT t.genre, COUNT(*) AS Sales_Count
+FROM dim_track t
+JOIN fact_invoice fi ON t.dim_track_id = fi.dim_track_id
+GROUP BY t.genre
+ORDER BY Sales_Count;
 ```
 
 <p align="center">
-  <img src="https://github.com/PalcivaPapricka/DT_projekt_chinook/blob/main/Vizualization%20screenshots/trzbazastrvtrok.PNG" alt="ERD Schema">
+  <img src="https://github.com/D-Duck/SCHL_ChinukETL/blob/main/png/SongsPerGenre.PNG" alt="Songs Per Genre">
   <br>
   <em> Star schema Chinook </em>
 </p>
 
 ---  
 
-### **4.2 Priemerné hodnota predaja podla typu média**
- Táto vizualizácia analyzuje predaje podľa typu média. Pre každý typ média vypočíta priemernú hodnotu predajov na základe faktúr priradených ku konkrétnym skladbám. Umožňuje identifikovať najvýnosnejšie typy médií.
+### **4.2 Number Of Songs Per Length**
+ Táto vizualizácia analyzuje počet skladieb podľa dĺžky, pričom dĺžka je rozdelená na kategórie: dlhé, stredné a krátke. Pre každú kategóriu dĺžky vypočíta počet skladieb, ktoré do nej spadajú. Umožňuje identifikovať, ktoré dĺžky skladieb sú najbežnejšie a poskytuje prehľad o distribúcii skladieb podľa ich trvania.
  
 ```sql
-SELECT 
-    t.media_type, 
-    AVG(f.total) AS avg_sale_value
-FROM 
-    fact_invoice f
-JOIN 
-    dim_track t ON f.dim_track_id= t.id_track
-GROUP BY 
-    t.media_type
-ORDER BY 
-    avg_sale_value DESC;
+SELECT dt.len, SUM(quantity) AS Quantity
+FROM fact_invoice fi
+JOIN dim_track dt ON fi.dim_track_id = dt.dim_track_id
+GROUP BY dt.len;
 ```
 
 <p align="center">
-  <img src="https://github.com/PalcivaPapricka/DT_projekt_chinook/blob/main/Vizualization%20screenshots/Priemernahodnotapodlamedia.PNG" alt="ERD Schema">
+  <img src="https://github.com/D-Duck/SCHL_ChinukETL/blob/main/png/NumberOfSongsPerLength.PNG" alt="ERD Schema">
   <br>
   <em> Star schema Chinook </em>
 </p>
