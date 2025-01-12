@@ -76,20 +76,20 @@ Príklad pre tabuľku employee_stage:
 ```sql
 CREATE OR REPLACE TABLE employee_staging (
     employee_id INT AUTOINCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    title VARCHAR(200) NOT NULL,
-    reports_to INT,
-    birth_date DATE NOT NULL,
-    hire_date DATE NOT NULL,
-    address STRING NOT NULL,
-    city VARCHAR(50) NOT NULL,
-    state VARCHAR(50),
-    country VARCHAR(50) NOT NULL,
+    first_name  VARCHAR(50)  NOT NULL,
+    last_name   VARCHAR(50)  NOT NULL,
+    title       VARCHAR(200) NOT NULL,
+    reports_to  INT,
+    birth_date  DATE         NOT NULL,
+    hire_date   DATE         NOT NULL,
+    address     STRING       NOT NULL,
+    city        VARCHAR(50)  NOT NULL,
+    state       VARCHAR(50),
+    country     VARCHAR(50)  NOT NULL,
     postal_code VARCHAR(25),
-    phone VARCHAR(30),
-    fax VARCHAR(30),
-    email VARCHAR(60) NOT NULL,
+    phone       VARCHAR(30),
+    fax         VARCHAR(30),
+    email       VARCHAR(60)  NOT NULL,
     FOREIGN KEY (reports_to) REFERENCES employee_staging(employee_id)
 );
 
